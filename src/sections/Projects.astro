@@ -35,17 +35,18 @@ const projectList = await fetch(
   }
 )
   .then((res) => res.json())
-  .then((list: gitHubProject[]) =>
-    list
+  .then((list: gitHubProject[]) => {
+    if(!list?.length) return
+    return list
       ?.sort((a, b) => {
-        const aDate = new Date(b.updated_at) as unknown as number
-        const bDate = new Date(a.updated_at) as unknown as number
-        return bDate  - aDate;
+        const aDate = new Date(b.updated_at) as unknown as number;
+        const bDate = new Date(a.updated_at) as unknown as number;
+        return bDate - aDate;
       })
-      .filter((project) => project?.homepage)
-  );
+      .filter((project) => project?.homepage);
+  });
 
-const projectListTitles = projectList.map(({ name }) => name);
+const projectListTitles = projectList?.map(({ name }) => name) ?? [];
 ---
 
 <main
@@ -56,7 +57,7 @@ const projectListTitles = projectList.map(({ name }) => name);
   <h2 class="text-2xl font-bol text-gray-dark m-2">Projects:</h2>
   <ul class="grid grid-cols-[repeat(auto-fill,_minmax(20rem,_1fr))] gap-2">
     {
-      projectList.map((t: any) => (
+      projectList?.map((t: any) => (
         <Card href={t.homepage} title={t.name} body={t.description} />
       ))
     }
