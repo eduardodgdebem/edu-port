@@ -1,9 +1,10 @@
 ---
 const profile = await fetch("https://api.github.com/users/eduardodgdebem", {
   headers: {
-    Authorization: "Bearer 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",
+    Authorization: "Bearer " + process.env.GIT_AUTH,
   },
 }).then((res) => res.json());
+
 const avatarImg = profile?.avatar_url
 ---
 

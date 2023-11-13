@@ -30,15 +30,17 @@ const projectList = await fetch(
   "https://api.github.com/users/eduardodgdebem/repos",
   {
     headers: {
-      Authorization: "Bearer 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",
+      Authorization: "Bearer " + process.env.GIT_AUTH,
     },
   }
 )
   .then((res) => res.json())
   .then((list: gitHubProject[]) =>
     list
-      .sort((a, b) => {
-        return new Date(b.updated_at) - new Date(a.updated_at);
+      ?.sort((a, b) => {
+        const aDate = new Date(b.updated_at) as unknown as number
+        const bDate = new Date(a.updated_at) as unknown as number
+        return bDate  - aDate;
       })
       .filter((project) => project?.homepage)
   );
