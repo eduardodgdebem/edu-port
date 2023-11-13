@@ -1,0 +1,22 @@
+---
+const profile = await fetch("https://api.github.com/users/eduardodgdebem", {
+  headers: {
+    Authorization: "Bearer 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",
+  },
+}).then((res) => res.json());
+const avatarImg = profile?.avatar_url
+---
+
+<main class="flex flex-wrap justify-around object-center center gap-2">
+  <div class="h-[15rem] aspect-square rounded-[50%] overflow-hidden">
+    <img src={avatarImg} alt="profile picture">
+  </div>
+  <p class="max-w-lg m-[auto_0]">
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt molestias
+    laboriosam totam quis doloribus sequi beatae, veritatis accusamus libero
+    temporibus aliquid odio iusto, assumenda modi recusandae, est dicta minus
+    atque quidem accusantium eius dignissimos quibusdam dolores tempora! Nulla
+    laboriosam corrupti beatae, odit dignissimos et fuga aliquid alias dolore
+    exercitationem illo.
+  </p>
+</main>

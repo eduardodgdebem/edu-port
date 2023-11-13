@@ -1,0 +1,92 @@
+---
+import Card from "../components/Card.astro";
+
+type gitHubProject = {
+  id: number;
+  node_id: string;
+  name: string;
+  full_name: string;
+  private: boolean;
+  owner: {};
+  html_url: string;
+  description: string | null;
+  fork: boolean;
+  url: string;
+  created_at: any;
+  updated_at: any;
+  pushed_at: any;
+  git_url: string;
+  clone_url: string;
+  homepage: string;
+  size: number;
+  stargazers_count: number;
+  watchers_count: number;
+  language: string;
+  archived: boolean;
+  visibility: string;
+};
+
+const projectList = await fetch(
+  "https://api.github.com/users/eduardodgdebem/repos",
+  {
+    headers: {
+      Authorization: "Bearer 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",
+    },
+  }
+)
+  .then((res) => res.json())
+  .then((list: gitHubProject[]) =>
+    list
+      .sort((a, b) => {
+        return new Date(b.updated_at) - new Date(a.updated_at);
+      })
+      .filter((project) => project?.homepage)
+  );
+
+const projectListTitles = projectList.map(({ name }) => name);
+---
+
+<main
+  data-titles={projectListTitles}
+  id="main-projects"
+  class="p-2 rounded-lg border-2 text-vanila"
+>
+  <h2 class="text-2xl font-bol text-gray-dark m-2">Projects:</h2>
+  <ul class="grid grid-cols-[repeat(auto-fill,_minmax(20rem,_1fr))] gap-2">
+    {
+      projectList.map((t: any) => (
+        <Card href={t.homepage} title={t.name} body={t.description} />
+      ))
+    }
+  </ul>
+</main>
+
+<script>
+  let main = document.getElementById("main-projects");
+  let titles = main?.dataset.titles?.split(",");
+
+  titles?.forEach((title) => {
+    let listItem = document.getElementById(title);
+    let gloom = document.getElementById("gloom-" + title);
+
+    if (!listItem) return;
+    listItem?.addEventListener("mousemove", (e) => {
+      if (!gloom || !listItem) return;
+      const { x, y } = listItem.getBoundingClientRect();
+      const trueX = e.clientX - x;
+      const trueY = e.clientY - y;
+
+      gloom.style.left = `${trueX}px`;
+      gloom.style.top = `${trueY}px`;
+    });
+
+    listItem?.addEventListener("mouseenter", (e) => {
+      if (!gloom) return;
+      gloom.style.visibility = "visible";
+    });
+    listItem?.addEventListener("mouseleave", (e) => {
+      if (!gloom) return;
+      gloom.style.visibility = "hidden";
+    });
+  });
+</script>

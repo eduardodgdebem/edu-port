@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  body: string;
+  href: string;
+}
+
+let { href, title, body } = Astro.props;
+
+if (!href?.startsWith("https") && href) {
+  href = "https://" + href;
+}
+---
+
+<li
+  class="min-h-[6rem] bg-gray rounded-lg text-vanila p-2 relative border-2 overflow-hidden hover:border-purple hover:text-vanila-bright"
+  id={title}
+>
+  <a href={href} target="_blank" class="w-full h-full flex justify-center object-center flex-col">
+    <h2 class="m-0 text-lg ">
+      {title}
+      {href && <span>&rarr;</span>}
+    </h2>
+    <p class="text-sm text-vanila-dark">
+      {body}
+    </p>
+  </a>
+
+  <div id={"gloom-"+title} class="gloom absolute invisible"></div>
+</li>
+
+<style>
+	.gloom {
+	  -webkit-box-shadow: 0px 0px 50px 30px #FFFFF050;
+	  box-shadow: 0px 0px 100px 100px #FFFFF050;
+	  border-radius: 50%;
+	}
+  </style>
