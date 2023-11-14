@@ -47,6 +47,8 @@ const projectList = await fetch(
   });
 
 const projectListTitles = projectList?.map(({ name }) => name) ?? [];
+
+console.log(projectList?.[0].url)
 ---
 
 <main

@@ -1,14 +1,15 @@
 ---
-
+import { Image } from 'astro:assets';
+import img from "../images/noiseBg.png"
 ---
 
-<main class="rounded-lg overflow-hidden bg-purple " id="main-home-page">
-  <div class="relative">
-    <h1 class="z-20 absolute font-black text-9xl text-vanila-bright outline-2 ml-10 top-[50%] translate-y-[-50%] max-sm:text-7xl max-sm:ml-5">
+<main class="rounded-lg overflow-hidden" id="main-home-page">
+  <div class="relative h-[25rem]">
+    <h1
+      class="absolute z-20 font-black text-9xl text-vanila-bright outline-2 ml-10 top-[50%] translate-y-[-50%] max-sm:text-7xl max-sm:ml-5"
+    >
       Eduardo<br /> de Bem
     </h1>
-    <canvas class="h-full w-full max-h-[25rem] z-0" id="main-canvas"> </canvas>
+    <Image src={img} alt="background image" class="h-full"/>
   </div>
 </main>
-
-<script is:inline src="/perlinJs.js"></script>

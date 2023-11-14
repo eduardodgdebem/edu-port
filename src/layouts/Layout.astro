@@ -1,4 +1,6 @@
 ---
+import Header from "../components/Header.astro";
+
 interface Props {
   title: string;
 }
@@ -21,6 +23,7 @@ const { title } = Astro.props;
       crossorigin="anonymous"></script>
   </head>
   <body class="bg-vanila-bright p-2">
+    <Header />
     <slot />
   </body>
 </html>

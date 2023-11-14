@@ -1,16 +1,27 @@
 ---
+import { Image } from 'astro:assets';
+
 const profile = await fetch("https://api.github.com/users/eduardodgdebem", {
   headers: {
     Authorization: "Bearer " + process.env.GIT_AUTH,
   },
 }).then((res) => res.json());
 
-const avatarImg = profile?.avatar_url
+const avatarImg = profile?.avatar_url;
 ---
 
-<main class="flex flex-wrap justify-around object-center center gap-2">
-  <div class="h-[15rem] aspect-square rounded-[50%] overflow-hidden">
-    <img src={avatarImg} alt="profile picture">
+<main
+  id="about-me-main"
+  class="flex flex-wrap justify-around object-center center gap-2"
+>
+  <div class="h-[15rem] aspect-square rounded-[50%] m-3" id="profile-img">
+    <Image
+      width="240"
+      height="240"
+      src={avatarImg}
+      alt="profile picture"
+      class="rounded-[50%] overflow-hidden"
+    />
   </div>
   <p class="max-w-lg m-[auto_0]">
     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt molestias
@@ -21,3 +32,74 @@ const avatarImg = profile?.avatar_url
     exercitationem illo.
   </p>
 </main>
+
+<script>
+  const boundElement = document.getElementById("about-me-main");
+  const imgElement = document.getElementById("profile-img");
+
+  const onMoveFunc = (e: MouseEvent) => {
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    if (!imgElement?.clientWidth || !imgElement?.clientWidth || !imgElement)
+      return;
+    const {
+      x,
+      y,
+      height: imageHeight,
+      width: imageWidth,
+    } = imgElement.getBoundingClientRect();
+    const middleX = imageWidth / 2 + x;
+    const middleY = imageHeight / 2 + y;
+
+    const maxAngle = 15
+
+    let offsetX = ((mouseX - middleX) / middleX) * maxAngle;
+    let offsetY = ((mouseY - middleY) / middleY) * maxAngle;
+
+    if(offsetX > maxAngle) offsetX = maxAngle
+    if(offsetY > maxAngle) offsetY = maxAngle
+
+    imgElement.style.setProperty("--rotateX", -offsetY + "deg");
+    imgElement.style.setProperty("--rotateY", offsetX + "deg");
+  };
+
+  boundElement?.addEventListener("mouseenter", (e) => {
+    boundElement.addEventListener("mousemove", onMoveFunc);
+  });
+  boundElement?.addEventListener("mouseleave", (e) => {
+    boundElement.removeEventListener("mousemove", onMoveFunc);
+  });
+</script>
+
+<style>
+  #profile-img {
+    position: relative;
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(var(--rotateX))
+      rotateY(var(--rotateY));
+  }
+
+  #profile-img::before,
+  #profile-img::after {
+    content: "";
+    position: absolute;
+    border-radius: inherit;
+  }
+
+  #profile-img::before {
+    inset: 0.75rem;
+    border-radius: inherit;
+    background: white;
+    z-index: -1;
+    transform: translateZ(-50px);
+    filter: blur(15px);
+    opacity: 0.5;
+  }
+
+  #profile-img::after {
+    z-index: -2;
+    inset: -0.5rem;
+    background-color: #3d424f;
+    transform: translateZ(-50px);
+  }
+</style>
