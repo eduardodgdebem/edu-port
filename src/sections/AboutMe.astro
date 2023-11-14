@@ -22,13 +22,13 @@ const avatarImg = profile?.avatar_url;
     achieving excellence, embracing challenges with focus, and I'm always eager
     to explore and learn more.
   </p>
-  <div class="h-[15rem] aspect-square rounded-[50%] m-3" id="profile-img">
+  <div class="h-[15rem] aspect-square rounded-lg m-3" id="profile-img">
     <Image
       width="240"
       height="240"
       src={avatarImg}
       alt="profile picture"
-      class="rounded-[50%] overflow-hidden"
+      class="rounded-lg overflow-hidden"
     />
   </div>
 </main>
@@ -73,6 +73,9 @@ const avatarImg = profile?.avatar_url;
 
 <style>
   #profile-img {
+    --rotateX: 10deg;
+    --rotateY: -10deg;
+
     position: relative;
     transform-style: preserve-3d;
     transform: perspective(1000px) rotateX(var(--rotateX))
