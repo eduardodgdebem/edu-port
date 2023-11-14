@@ -3,9 +3,10 @@ interface Props {
   title: string;
   body: string;
   href: string;
+  githubLink: string;
 }
 
-let { href, title, body } = Astro.props;
+let { href, title, body, githubLink: githubLink } = Astro.props;
 
 if (!href?.startsWith("https") && href) {
   href = "https://" + href;
@@ -13,22 +14,36 @@ if (!href?.startsWith("https") && href) {
 ---
 
 <li
-  class="min-h-[6rem] bg-gray rounded-lg text-vanila p-2 relative border-2 overflow-hidden hover:border-purple hover:text-vanila-bright"
+  class="bg-gray rounded-lg text-vanila p-2 relative border-2 overflow-hidden hover:border-purple hover:text-vanila-bright flex justify-between object-center"
   id={title}
 >
-  <a
-    href={href}
-    target="_blank"
-    class="w-full h-full flex justify-center object-center flex-col"
-  >
+  <a href={href} target="_blank" class="w-full flex flex-col">
     <h2 class="m-0 text-lg">
       {title}
-      {href && <span>&rarr;</span>}
     </h2>
     <p class="text-sm text-vanila-dark">
       {body}
     </p>
   </a>
+
+  <div class="flex gap-2 p-2">
+    <a
+      href={githubLink}
+      class="p-2 h-9 aspect-square rounded-[50%] border-2 text-vanila flex justify-center object-center cursor-pointer hover:text-gray-dark hover:bg-vanila-bright"
+      ><i class="fa-brands fa-github"></i></a
+    >
+    {
+      href && (
+        <a
+          href={href}
+          target="_blank"
+          class="p-2 h-9 aspect-square rounded-[50%] border-2 text-vanila   flex justify-center object-center cursor-pointer hover:text-gray-dark hover:bg-vanila-bright"
+        >
+          <i class="fa-solid fa-link" />
+        </a>
+      )
+    }
+  </div>
 
   <div id={"gloom-" + title} class="gloom absolute invisible"></div>
 </li>

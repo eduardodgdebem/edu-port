@@ -9,7 +9,7 @@ type gitHubProject = {
   private: boolean;
   owner: {};
   html_url: string;
-  description: string | null;
+  description: string;
   fork: boolean;
   url: string;
   created_at: any;
@@ -46,6 +46,7 @@ const projectList = await fetch(
       .filter((project) => project?.homepage);
   });
 
+
 const projectListTitles = projectList?.map(({ name }) => name) ?? [];
 ---
 
@@ -57,8 +58,8 @@ const projectListTitles = projectList?.map(({ name }) => name) ?? [];
   <h2 class="text-2xl font-bol text-gray-dark m-2">Projects:</h2>
   <ul class="grid grid-cols-[repeat(auto-fill,_minmax(20rem,_1fr))] gap-2">
     {
-      projectList?.map((t: any) => (
-        <Card href={t.homepage} title={t.name} body={t.description} />
+      projectList?.map((t) => (
+        <Card href={t.homepage} title={t.name} body={t.description} githubLink={t.html_url}/>
       ))
     }
   </ul>
