@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import AboutMe from "../sections/AboutMe.astro";
-import Contact from "../sections/Contact.astro";
 import HomePage from "../sections/HomePage.astro";
 import Projects from "../sections/Projects.astro";
 ---
@@ -16,7 +15,11 @@ import Projects from "../sections/Projects.astro";
   <section id="projects" class="pb-8">
     <Projects />
   </section>
-  <section id="contact">
-    <Contact />
-  </section>
 </Layout>
+
+<style>
+  section {
+    padding-top: 60px;
+    margin-top: -60px;
+  }
+</style>

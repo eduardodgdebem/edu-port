@@ -36,7 +36,7 @@ const projectList = await fetch(
 )
   .then((res) => res.json())
   .then((list: gitHubProject[]) => {
-    if(!list?.length) return
+    if (!list?.length) return;
     return list
       ?.sort((a, b) => {
         const aDate = new Date(b.updated_at) as unknown as number;
