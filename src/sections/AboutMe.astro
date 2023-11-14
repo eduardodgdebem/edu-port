@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
 
 const profile = await fetch("https://api.github.com/users/eduardodgdebem", {
   headers: {
@@ -12,8 +12,16 @@ const avatarImg = profile?.avatar_url;
 
 <main
   id="about-me-main"
-  class="flex flex-wrap justify-around object-center center gap-2"
+  class="flex flex-wrap-reverse justify-center object-center center gap-4"
 >
+  <p class="max-w-lg m-[auto_0] text-gray-dark font-medium text-lg">
+    Nice to meet you! I'm Eduardo. Right after high school, I dove into
+    programming and found my passion. Since then, I've been continuously
+    improving my skills and expanding my knowledge. Crafting remarkable
+    experiences through development is what drives me. I'm dedicated to
+    achieving excellence, embracing challenges with focus, and I'm always eager
+    to explore and learn more.
+  </p>
   <div class="h-[15rem] aspect-square rounded-[50%] m-3" id="profile-img">
     <Image
       width="240"
@@ -23,14 +31,6 @@ const avatarImg = profile?.avatar_url;
       class="rounded-[50%] overflow-hidden"
     />
   </div>
-  <p class="max-w-lg m-[auto_0]">
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt molestias
-    laboriosam totam quis doloribus sequi beatae, veritatis accusamus libero
-    temporibus aliquid odio iusto, assumenda modi recusandae, est dicta minus
-    atque quidem accusantium eius dignissimos quibusdam dolores tempora! Nulla
-    laboriosam corrupti beatae, odit dignissimos et fuga aliquid alias dolore
-    exercitationem illo.
-  </p>
 </main>
 
 <script>
@@ -51,13 +51,13 @@ const avatarImg = profile?.avatar_url;
     const middleX = imageWidth / 2 + x;
     const middleY = imageHeight / 2 + y;
 
-    const maxAngle = 15
+    const maxAngle = 25;
 
     let offsetX = ((mouseX - middleX) / middleX) * maxAngle;
     let offsetY = ((mouseY - middleY) / middleY) * maxAngle;
 
-    if(offsetX > maxAngle) offsetX = maxAngle
-    if(offsetY > maxAngle) offsetY = maxAngle
+    if (offsetX > maxAngle) offsetX = maxAngle;
+    if (offsetY > maxAngle) offsetY = maxAngle;
 
     imgElement.style.setProperty("--rotateX", -offsetY + "deg");
     imgElement.style.setProperty("--rotateY", offsetX + "deg");
