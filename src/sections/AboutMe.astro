@@ -35,19 +35,19 @@ const avatarImg = profile?.avatar_url;
 
 <script>
   const boundElement = document.getElementById("about-me-main");
-  const imgElement = document.getElementById("profile-img");
+  const imgWraperElement = document.getElementById("profile-img");
 
   const onMoveFunc = (e: MouseEvent) => {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
-    if (!imgElement?.clientWidth || !imgElement?.clientWidth || !imgElement)
+    if (!imgWraperElement?.clientWidth || !imgWraperElement?.clientWidth || !imgWraperElement)
       return;
     const {
       x,
       y,
       height: imageHeight,
       width: imageWidth,
-    } = imgElement.getBoundingClientRect();
+    } = imgWraperElement.getBoundingClientRect();
     const middleX = imageWidth / 2 + x;
     const middleY = imageHeight / 2 + y;
 
@@ -59,8 +59,8 @@ const avatarImg = profile?.avatar_url;
     if (offsetX > maxAngle) offsetX = maxAngle;
     if (offsetY > maxAngle) offsetY = maxAngle;
 
-    imgElement.style.setProperty("--rotateX", -offsetY + "deg");
-    imgElement.style.setProperty("--rotateY", offsetX + "deg");
+    imgWraperElement.style.setProperty("--rotateX", -offsetY + "deg");
+    imgWraperElement.style.setProperty("--rotateY", offsetX + "deg");
   };
 
   boundElement?.addEventListener("mouseenter", (e) => {
@@ -104,5 +104,10 @@ const avatarImg = profile?.avatar_url;
     inset: -0.5rem;
     background-color: #3d424f;
     transform: translateZ(-50px);
+    transition: 300ms;
+  }
+
+  #about-me-main:hover #profile-img::after {
+    background-color: #59eb15
   }
 </style>

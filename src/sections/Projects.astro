@@ -35,9 +35,9 @@ const projectList = await fetch(
   }
 )
   .then((res) => res.json())
-  .then((list: gitHubProject[]) => {
-    if (!list?.length) return;
-    return list
+  .then((projects: gitHubProject[]) => {
+    if (!projects?.length) return;
+    return projects
       ?.sort((a, b) => {
         const aDate = new Date(b.updated_at) as unknown as number;
         const bDate = new Date(a.updated_at) as unknown as number;
@@ -67,30 +67,30 @@ const projectListTitles = projectList?.map(({ name }) => name) ?? [];
 
 <script>
   let main = document.getElementById("main-projects");
-  let titles = main?.dataset.titles?.split(",");
+  let cardTitles = main?.dataset.titles?.split(",");
 
-  titles?.forEach((title) => {
-    let listItem = document.getElementById(title);
-    let gloom = document.getElementById("gloom-" + title);
+  cardTitles?.forEach((title) => {
+    let cardElement = document.getElementById(title);
+    let gloomElement = document.getElementById("gloom-" + title);
 
-    if (!listItem) return;
-    listItem?.addEventListener("mousemove", (e) => {
-      if (!gloom || !listItem) return;
-      const { x, y } = listItem.getBoundingClientRect();
+    if (!cardElement) return;
+    cardElement?.addEventListener("mousemove", (e) => {
+      if (!gloomElement || !cardElement) return;
+      const { x, y } = cardElement.getBoundingClientRect();
       const trueX = e.clientX - x;
       const trueY = e.clientY - y;
 
-      gloom.style.left = `${trueX}px`;
-      gloom.style.top = `${trueY}px`;
+      gloomElement.style.left = `${trueX}px`;
+      gloomElement.style.top = `${trueY}px`;
     });
 
-    listItem?.addEventListener("mouseenter", (e) => {
-      if (!gloom) return;
-      gloom.style.visibility = "visible";
+    cardElement?.addEventListener("mouseenter", (e) => {
+      if (!gloomElement) return;
+      gloomElement.style.visibility = "visible";
     });
-    listItem?.addEventListener("mouseleave", (e) => {
-      if (!gloom) return;
-      gloom.style.visibility = "hidden";
+    cardElement?.addEventListener("mouseleave", (e) => {
+      if (!gloomElement) return;
+      gloomElement.style.visibility = "hidden";
     });
   });
 </script>
