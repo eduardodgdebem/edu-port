@@ -1,30 +1,6 @@
 ---
 import Card from "../components/Card.astro";
-
-type gitHubProject = {
-  id: number;
-  node_id: string;
-  name: string;
-  full_name: string;
-  private: boolean;
-  owner: {};
-  html_url: string;
-  description: string;
-  fork: boolean;
-  url: string;
-  created_at: any;
-  updated_at: any;
-  pushed_at: any;
-  git_url: string;
-  clone_url: string;
-  homepage: string;
-  size: number;
-  stargazers_count: number;
-  watchers_count: number;
-  language: string;
-  archived: boolean;
-  visibility: string;
-};
+import type { ProjectType } from "../shared/github.types";
 
 const projectList = await fetch(
   "https://api.github.com/users/eduardodgdebem/repos",
@@ -35,7 +11,7 @@ const projectList = await fetch(
   }
 )
   .then((res) => res.json())
-  .then((projects: gitHubProject[]) => {
+  .then((projects: ProjectType[]) => {
     if (!projects?.length) return;
     return projects
       ?.sort((a, b) => {
@@ -45,7 +21,6 @@ const projectList = await fetch(
       })
       .filter((project) => project?.homepage);
   });
-
 
 const projectListTitles = projectList?.map(({ name }) => name) ?? [];
 ---
@@ -58,8 +33,15 @@ const projectListTitles = projectList?.map(({ name }) => name) ?? [];
   <h2 class="text-2xl font-bol text-gray-dark m-2">Projects:</h2>
   <ul class="grid grid-cols-[repeat(auto-fill,_minmax(20rem,_1fr))] gap-2">
     {
-      projectList?.map((t) => (
-        <Card href={t.homepage} title={t.name} body={t.description} githubLink={t.html_url}/>
+      projectList?.map((project) => (
+        // <Card href={t.homepage} title={t.name} body={t.description} githubLink={t.html_url}/>
+        <Card
+          href={`/project/${project.name}`}
+          title={project.name}
+          body={project.description}
+          githubLink={project.html_url}
+          projectLink={project.homepage}
+        />
       ))
     }
   </ul>

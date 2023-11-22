@@ -1,0 +1,58 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import type { ProjectType } from "../../shared/github.types";
+import UrlScreenshot from "../../components/UrlScreenshot.astro";
+import { Image } from "astro:assets";
+
+const { name } = Astro.params;
+
+const project = (await fetch(
+  `https://api.github.com/repos/eduardodgdebem/${name}`,
+  {
+    headers: {
+      Authorization: "Bearer " + process.env.GIT_AUTH,
+    },
+  }
+).then((res) => res.json())) as ProjectType;
+
+const teste = (await fetch(
+  `https://api.github.com/repos/eduardodgdebem/${name}/contents/README.md`,
+  {
+    headers: {
+      Authorization: "Bearer " + process.env.GIT_AUTH,
+    },
+  }
+).then((res) => res.json()));
+
+let decodeMd = ""
+if (teste.content) {
+  decodeMd = Buffer.from(teste.content, 'base64').toString()
+  console.log(decodeMd)
+}
+---
+
+<Layout title="eduardogdebem">
+  <a href={project.html_url} target="_blank" class="max-w-fit block">
+    <h1 class="w-fit text-4xl font-bold hover:underline duration-200">
+      {project.full_name}
+    </h1>
+  </a>
+  <p class="text-2xl font-semibold text-gray">{project.description}</p>
+  <div class="w-full flex justify-center my-5">
+    <a
+      href={project.homepage}
+      target="_blank"
+      class="overflow-hidden rounded-lg block w-fit bg-[black] border-2 border-vanila-dark"
+    >
+      <Image
+        height={600}
+        width={600}
+        alt={`${project.name} site`}
+        src={`/images/project-${project.name}.jpeg`}
+        class="hover:opacity-50 duration-200"
+      />
+    </a>
+  </div>
+  <Fragment set:text={decodeMd}>
+  </Fragment>
+</Layout>

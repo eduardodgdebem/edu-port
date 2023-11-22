@@ -1,17 +1,61 @@
 ---
 import { Image } from "astro:assets";
 import img from "../images/noiseBg.png";
+
+const profile = await fetch("https://api.github.com/users/eduardodgdebem", {
+  headers: {
+    Authorization: "Bearer " + process.env.GIT_AUTH,
+  },
+}).then((res) => res.json());
+
+const avatarImg = profile?.avatar_url;
 ---
 
-<main class="rounded-lg overflow-hidden bg-gray-dark" id="main-home-page">
-  <div class="relative h-[25rem]">
-    <h1
-      class="absolute z-20 font-black text-9xl text-vanila-bright outline-2 ml-10 top-[50%] translate-y-[-50%] max-sm:text-7xl max-sm:ml-5"
-    >
-      Eduardo<br /> de Bem
-    </h1>
-    <Image src={img} alt="background image" class="h-full min-w-fit" id="main-image" />
+<main
+  class="rounded-lg overflow-hidden bg-gray-dark relative h-[25rem]"
+  id="main-home-page"
+>
+  <div
+    class="absolute z-20 font-black text-vanila-bright outline-2 px-10 top-[50%] translate-y-[-50%] max-sm:px-5 flex w-full gap-6 max-sm:flex-col"
+  >
+    <div class="">
+      <Image
+        width="240"
+        height="240"
+        src={avatarImg}
+        alt="profile picture"
+        class="rounded-lg aspect-square object-cover max-sm:h-[120px] max-sm:w-[120px] border-4"
+      />
+      <ul class="p-2 flex max-sm:w-[120px] justify-between text-3xl">
+        <li class="duration-100 hover:text-vanila-bright">
+          <a
+            href="https://www.linkedin.com/in/eduardo-goulart-de-bem-a60a3b216"
+            target="_blank"
+            ><i class="fa-brands fa-linkedin"></i>
+          </a>
+        </li>
+        <li>&#x2022;</li>
+        <li class="duration-100 hover:text-vanila-bright">
+          <a href="mailto:eduardogdebem@gmail.com"
+            ><i class="fa-solid fa-envelope"></i>
+          </a>
+        </li>
+        <li>&#x2022;</li>
+        <li class="duration-100 hover:text-vanila-bright">
+          <a href="https://github.com/eduardodgdebem" target="_blank"
+            ><i class="fa-brands fa-github"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="text-8xl max-sm:text-7xl">Eduardo<br /> de Bem</h1>
   </div>
+  <Image
+    src={img}
+    alt="background image"
+    class="h-full min-w-fit"
+    id="main-image"
+  />
 </main>
 
 <style>
@@ -27,5 +71,4 @@ import img from "../images/noiseBg.png";
     transform: translateX(5rem);
     filter: blur(1px);
   }
-
 </style>

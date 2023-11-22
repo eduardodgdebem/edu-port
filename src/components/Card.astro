@@ -4,12 +4,13 @@ interface Props {
   body: string;
   href: string;
   githubLink: string;
+  projectLink: string;
 }
 
-let { href, title, body, githubLink: githubLink } = Astro.props;
+let { href, title, body, githubLink, projectLink } = Astro.props;
 
-if (!href?.startsWith("https") && href) {
-  href = "https://" + href;
+if (!projectLink?.startsWith("https") && projectLink) {
+  projectLink = "https://" + projectLink;
 }
 ---
 
@@ -17,7 +18,7 @@ if (!href?.startsWith("https") && href) {
   class="bg-gray rounded-lg text-vanila p-2 relative border-2 overflow-hidden hover:border-purple hover:text-vanila-bright flex justify-between object-center"
   id={title}
 >
-  <a href={href} target="_blank" class="w-full flex flex-col">
+  <a href={href} class="w-full flex flex-col">
     <h2 class="m-0 text-lg">
       {title}
     </h2>
@@ -33,9 +34,9 @@ if (!href?.startsWith("https") && href) {
       ><i class="fa-brands fa-github"></i></a
     >
     {
-      href && (
+      projectLink && (
         <a
-          href={href}
+          href={projectLink}
           target="_blank"
           class="p-2 h-9 aspect-square rounded-[50%] border-2 text-vanila   flex justify-center object-center cursor-pointer hover:text-purple hover:bg-vanila-bright "
         >
