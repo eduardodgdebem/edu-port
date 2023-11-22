@@ -1,33 +1,24 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import type { ProjectType } from "../../shared/github.types";
-import UrlScreenshot from "../../components/UrlScreenshot.astro";
 import { Image } from "astro:assets";
+import { marked } from "marked";
+import { getByUrl } from "../../shared/github";
 
 const { name } = Astro.params;
 
-const project = (await fetch(
-  `https://api.github.com/repos/eduardodgdebem/${name}`,
-  {
-    headers: {
-      Authorization: "Bearer " + process.env.GIT_AUTH,
-    },
-  }
-).then((res) => res.json())) as ProjectType;
+const project = await getByUrl<ProjectType>(
+  `https://api.github.com/repos/eduardodgdebem/${name}`
+);
 
-const teste = (await fetch(
-  `https://api.github.com/repos/eduardodgdebem/${name}/contents/README.md`,
-  {
-    headers: {
-      Authorization: "Bearer " + process.env.GIT_AUTH,
-    },
-  }
-).then((res) => res.json()));
+const teste = await getByUrl<any>(
+  `https://api.github.com/repos/eduardodgdebem/${name}/contents/README.md`
+);
 
-let decodeMd = ""
+let html = "";
 if (teste.content) {
-  decodeMd = Buffer.from(teste.content, 'base64').toString()
-  console.log(decodeMd)
+  const decodeMd = Buffer.from(teste.content, "base64").toString();
+  html = marked.parse(decodeMd);
 }
 ---
 
@@ -53,6 +44,7 @@ if (teste.content) {
       />
     </a>
   </div>
-  <Fragment set:text={decodeMd}>
-  </Fragment>
+  <div class="p-2 border-2 border-vanila-dark rounded-lg mb-2 font-medium">
+    <Fragment set:html={html} />
+  </div>
 </Layout>

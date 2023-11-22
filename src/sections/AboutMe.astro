@@ -1,38 +1,30 @@
 ---
-import { Image } from "astro:assets";
-
-const profile = await fetch("https://api.github.com/users/eduardodgdebem", {
-  headers: {
-    Authorization: "Bearer " + process.env.GIT_AUTH,
-  },
-}).then((res) => res.json());
-
-const avatarImg = profile?.avatar_url;
+import TypingHeading from "../components/TypingHeading";
+const headings = [
+  "Developer",
+  "Front end",
+  "Traveler",
+  "Problem solver",
+];
 ---
 
 <main
-  id="about-me-main"
-  class="flex flex-wrap-reverse justify-center object-center center gap-4"
+  class="relative overflow-hidden flex flex-wrap-reverse justify-center object-center center gap-4 bg-gray border-2 border-vanila-dark rounded-lg text-vanila-bright shadow-inner hover:border-purple duration-300"
 >
-  <p class="max-w-lg m-[auto_0] text-gray-dark font-medium text-lg">
-    Nice to meet you! I'm Eduardo. Right after high school, I dove into
-    programming and found my passion. Since then, I've been continuously
-    improving my skills and expanding my knowledge. Crafting remarkable
-    experiences through development is what drives me. I'm dedicated to
-    achieving excellence, embracing challenges with focus, and I'm always eager
-    to explore and learn more.
-  </p>
-  <!-- <div class="h-[15rem] aspect-square rounded-lg m-3" id="profile-img">
-    <Image
-      width="240"
-      height="240"
-      src={avatarImg}
-      alt="profile picture"
-      class="rounded-lg overflow-hidden"
-    />
-  </div> -->
+  <div class="p-8 z-10">
+    <TypingHeading headings={headings} className="text-4xl text-[white] font-bold" client:load />
+    <p class="max-w-lg m-[auto_0] font-normal text-lg text-vanila-bright">
+      Nice to meet you! I'm Eduardo. Right after high school, I dove into
+      programming and found my passion. Since then, I've been continuously
+      improving my skills and expanding my knowledge. Crafting remarkable
+      experiences through development is what drives me. I'm dedicated to
+      achieving excellence, embracing challenges with focus, and I'm always
+      eager to explore and learn more.
+    </p>
+  </div>
+  <div class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] blur-3xl rounded-[50%] w-[70%] aspect-square bg-[#ffffff2a] "></div>
 </main>
-
+<!-- 
 <script>
   const boundElement = document.getElementById("about-me-main");
   const imgWraperElement = document.getElementById("profile-img");
@@ -110,4 +102,4 @@ const avatarImg = profile?.avatar_url;
   #about-me-main:hover #profile-img::after {
     background-color: #59eb15
   }
-</style>
+</style> -->

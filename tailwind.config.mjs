@@ -2,6 +2,9 @@
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
+    backgroundImage: {
+      'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+    },
     colors: {
       "vanila-bright": "#FFFFF0",
       vanila: "#d4d4c5",
