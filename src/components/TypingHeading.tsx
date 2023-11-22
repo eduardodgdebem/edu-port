@@ -35,7 +35,6 @@ const TypingHeading = ({
     setInterval(() => {
       setIsBlink((currIsBlink) => !currIsBlink);
     }, 400);
-    console.log("opa");
   }, []);
 
   return (
